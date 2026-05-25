@@ -1,0 +1,266 @@
+// generate-site.js
+
+const talksData = [];
+
+const eventStartTime = new Date();
+eventStartTime.setHours(10, 0, 0, 0); // Event starts at 10:00 AM
+
+let currentTime = eventStartTime;
+
+function formatTime(date) {
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+}
+
+// Talk 1
+talksData.push({
+    id: 'talk1',
+    title: 'Introduction to Web Components',
+    speakers: ['Alice Smith'],
+    category: ['Frontend', 'Web Development'],
+    duration: 60,
+    description: 'A deep dive into building reusable components for the web.',
+    startTime: formatTime(currentTime)
+});
+currentTime.setMinutes(currentTime.getMinutes() + 60); // Add 60 mins for talk
+talksData[0].endTime = formatTime(currentTime);
+currentTime.setMinutes(currentTime.getMinutes() + 10); // Add 10 mins for transition
+
+// Talk 2
+talksData.push({
+    id: 'talk2',
+    title: 'Node.js Performance Tuning',
+    speakers: ['Bob Johnson'],
+    category: ['Backend', 'Performance'],
+    duration: 60,
+    description: 'Strategies and tools to optimize your Node.js applications.',
+    startTime: formatTime(currentTime)
+});
+currentTime.setMinutes(currentTime.getMinutes() + 60);
+talksData[1].endTime = formatTime(currentTime);
+currentTime.setMinutes(currentTime.getMinutes() + 10);
+
+// Talk 3
+talksData.push({
+    id: 'talk3',
+    title: 'CSS Grid Layouts Masterclass',
+    speakers: ['Charlie Brown', 'Diana Prince'],
+    category: ['Frontend', 'CSS', 'Design'],
+    duration: 60,
+    description: 'Unleash the power of CSS Grid for complex and responsive layouts.',
+    startTime: formatTime(currentTime)
+});
+currentTime.setMinutes(currentTime.getMinutes() + 60);
+talksData[2].endTime = formatTime(currentTime);
+
+// Lunch Break
+talksData.push({
+    id: 'lunch',
+    title: 'Lunch Break',
+    speakers: [],
+    category: ['Break'],
+    duration: 60,
+    description: 'Enjoy a delicious lunch and network with fellow attendees.',
+    startTime: formatTime(currentTime)
+});
+currentTime.setMinutes(currentTime.getMinutes() + 60);
+talksData[3].endTime = formatTime(currentTime);
+
+
+// Talk 4
+talksData.push({
+    id: 'talk4',
+    title: 'Introduction to GraphQL',
+    speakers: ['Eve Davis'],
+    category: ['Backend', 'API'],
+    duration: 60,
+    description: 'Explore GraphQL as an alternative to REST for your APIs.',
+    startTime: formatTime(currentTime)
+});
+currentTime.setMinutes(currentTime.getMinutes() + 60);
+talksData[4].endTime = formatTime(currentTime);
+currentTime.setMinutes(currentTime.getMinutes() + 10);
+
+// Talk 5
+talksData.push({
+    id: 'talk5',
+    title: 'Securing Your Web Applications',
+    speakers: ['Frank White'],
+    category: ['Security', 'Backend'],
+    duration: 60,
+    description: 'Best practices for protecting your web apps from common vulnerabilities.',
+    startTime: formatTime(currentTime)
+});
+currentTime.setMinutes(currentTime.getMinutes() + 60);
+talksData[5].endTime = formatTime(currentTime);
+currentTime.setMinutes(currentTime.getMinutes() + 10);
+
+// Talk 6
+talksData.push({
+    id: 'talk6',
+    title: 'Modern JavaScript Features',
+    speakers: ['Grace Black'],
+    category: ['Frontend', 'JavaScript'],
+    duration: 60,
+    description: 'A look at the latest features in ECMAScript and how to use them.',
+    startTime: formatTime(currentTime)
+});
+currentTime.setMinutes(currentTime.getMinutes() + 60);
+talksData[6].endTime = formatTime(currentTime);
+
+
+const htmlContent = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Talks Event Schedule</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #0056b3;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .search-container {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .search-container input[type="text"] {
+            width: 70%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        .schedule-item {
+            background-color: #e9ecef;
+            border-left: 5px solid #0056b3;
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 4px;
+        }
+        .schedule-item.lunch {
+            border-left: 5px solid #28a745;
+            background-color: #d4edda;
+        }
+        .schedule-item h2 {
+            margin-top: 0;
+            color: #0056b3;
+            font-size: 20px;
+        }
+        .schedule-item.lunch h2 {
+            color: #28a745;
+        }
+        .schedule-item p {
+            margin: 5px 0;
+        }
+        .schedule-item .time {
+            font-weight: bold;
+            color: #555;
+        }
+        .schedule-item .speakers {
+            font-style: italic;
+        }
+        .schedule-item .category {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 10px;
+        }
+        .schedule-item .category span {
+            display: inline-block;
+            background-color: #007bff;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 3px;
+            margin-right: 5px;
+        }
+        .schedule-item.lunch .category span {
+            background-color: #28a745;
+        }
+        .no-results {
+            text-align: center;
+            color: #888;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Tech Talks Day - Event Schedule</h1>
+        
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search by category (e.g., Frontend, Backend)...">
+        </div>
+
+        <div id="schedule"></div>
+    </div>
+
+    <script>
+        const talks = ${JSON.stringify(talksData, null, 2)};
+
+        const scheduleDiv = document.getElementById('schedule');
+        const searchInput = document.getElementById('searchInput');
+
+        function renderSchedule(filterCategory = '') {
+            scheduleDiv.innerHTML = ''; // Clear current schedule
+
+            const filteredTalks = talks.filter(talk => {
+                if (!filterCategory) return true;
+                return talk.category.some(cat => cat.toLowerCase().includes(filterCategory.toLowerCase()));
+            });
+
+            if (filteredTalks.length === 0) {
+                scheduleDiv.innerHTML = '<p class="no-results">No talks found for this category.</p>';
+                return;
+            }
+
+            filteredTalks.forEach(talk => {
+                const item = document.createElement('div');
+                item.classList.add('schedule-item');
+                if (talk.id === 'lunch') {
+                    item.classList.add('lunch');
+                }
+
+                const categoriesHtml = talk.category.map(cat => \`<span>\${cat}</span>\`).join('');
+
+                item.innerHTML = \`
+                    <p class="time">\${talk.startTime} - \${talk.endTime}</p>
+                    <h2>\${talk.title}</h2>
+                    \${talk.speakers.length > 0 ? \`<p class="speakers">Speaker(s): \${talk.speakers.join(', ')}</p>\` : ''}
+                    <p>\${talk.description}</p>
+                    <div class="category">\${categoriesHtml}</div>
+                \`;
+                scheduleDiv.appendChild(item);
+            });
+        }
+
+        // Initial render
+        renderSchedule();
+
+        // Search functionality
+        searchInput.addEventListener('keyup', (event) => {
+            renderSchedule(event.target.value);
+        });
+    </script>
+</body>
+</html>
+`;
+
+require('fs').writeFileSync('index.html', htmlContent);
+console.log('index.html generated successfully!');
